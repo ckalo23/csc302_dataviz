@@ -1,0 +1,25 @@
+---
+title: "HW_5"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+library(maps)
+library(mapdata)
+```
+
+## California Wind Turbines
+
+```{r, echo=FALSE}
+map_data("state") %>% filter(region == 'california') -> cali_map
+
+load('/Users/ckalo7/Documents/CSC 302/Slides13_Geo_Rscripts_Data/wind_turbines.rda')
+wind_turbines %>% filter(t_state == 'CA') -> cali_wind_turbines
+
+ggplot(data=cali_map, aes(long, lat)) +
+  geom_polygon(aes(group=group, fill=group)) + guides(fill='none') +
+  geom_point(data=cali_wind_turbines, aes(xlong, ylat), color = "#ff0000") 
+```
